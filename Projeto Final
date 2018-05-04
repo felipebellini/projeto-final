@@ -4,13 +4,13 @@ import tkinter as tk
 
 class Quadrante_Horizontal:
     def __init__(self, linha, coluna):
-        self = tk.Label(tela_de_jogo, height=2, bg='gray')
+        self = tk.Label(tela_de_jogo, height=2, bg="#c94646")
         self.grid(row=linha, column=coluna)
 
 
 class Quadrante_Vertical:
     def __init__(self, coluna, linha):
-        self = tk.Label(tela_de_jogo, width=4, bg='gray')
+        self = tk.Label(tela_de_jogo, width=4, bg="#c94646")
         self.grid(row=linha, column=coluna)
 
 
@@ -45,20 +45,20 @@ class Button:
   
 class Label_Horizontal:
     def __init__(self, line, colunas):
-        self = tk.Label(tela_de_jogo, bg="grey", height=1, width=26)
+        self = tk.Label(tela_de_jogo, bg="#c94646", height=1, width=26)
         self.grid(row=line, column=colunas)
 
 
 class Label_Vertical:
     def __init__(self, colunas, line):
-        self = tk.Label(tela_de_jogo, bg="grey", height=1, width=4)
+        self = tk.Label(tela_de_jogo, bg="#c94646", height=1, width=4)
         self.grid(row=line, column=colunas)
 
 
 Botoes = dict()
 tela_de_jogo = tk.Tk()
 tela_de_jogo.title("Jogo da Velha Múltiplo")
-tela_de_jogo["bg"] = "gray"
+tela_de_jogo["bg"] = "#c94646"
 nome_do_botao = ''
 for c in range(0, 21):
     if c % 2 == 0:
@@ -81,8 +81,3 @@ labelgrande = Quadrante_Vertical(14, 0)
 
 tela_de_jogo.geometry("409x441")
 tela_de_jogo.mainloop()
-
-
-
-
-
