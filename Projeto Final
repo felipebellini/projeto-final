@@ -1,57 +1,88 @@
-# -*- coding: utf-8 -*-
-
 import tkinter as tk
 
+
+
 class Quadrante_Horizontal:
-    def __init__(self,linha,coluna):
-        self=tk.Label(tela_de_jogo,height=2,bg='red')
+    def __init__(self, linha, coluna):
+        self = tk.Label(tela_de_jogo, height=2, bg='gray')
         self.grid(row=linha, column=coluna)
-        
+
+
 class Quadrante_Vertical:
-    def __init__(self,coluna,linha):
-        self=tk.Label(tela_de_jogo,width=4,bg='red')
-        self.grid(row=linha, column=coluna)        
+    def __init__(self, coluna, linha):
+        self = tk.Label(tela_de_jogo, width=4, bg='gray')
+        self.grid(row=linha, column=coluna)
+
+
 class Button:
-    def __init__(self,line,colunas):
-        self=tk.Button(tela_de_jogo,height=2,width=4)
-        self.grid(row=line,column=colunas)
+    def __init__(self, line, colunas):
+        self = tk.Button(tela_de_jogo, height=2, width=4)
+        self.grid(row=line, column=colunas,command=alternar(self), text="")
+
+  def alternar(self):
+        jogando = input("Digite x ou o para iniciar o jogo")
+        x = 0
+        o = 0
+
+        if jogando == "x":
+            x += 1
+            jogando = "o"
+        elif jogando == "o":
+            o += 1
+            jogando = "x"
+
+        if x > o:
+            self.text("O")
+            print("Vez do bolinha")
+        elif o > x:
+            print("Vez do x")
+            self.text("x")
+        elif x == o:
+            print("Vez de {0}".format(jogando))
+            self.text(jogando)
+
+
+  
 class Label_Horizontal:
-    def __init__(self,line,colunas):
-        self=tk.Label(tela_de_jogo,bg="grey",height=1,width=26)
-        self.grid(row=line,column=colunas)
-        
+    def __init__(self, line, colunas):
+        self = tk.Label(tela_de_jogo, bg="grey", height=1, width=26)
+        self.grid(row=line, column=colunas)
+
+
 class Label_Vertical:
-    def __init__(self,colunas,line):
-        self=tk.Label(tela_de_jogo,bg="grey",height=1,width=4)
-        self.grid(row=line,column=colunas)        
-Botoes=dict()              
-tela_de_jogo=tk.Tk()
+    def __init__(self, colunas, line):
+        self = tk.Label(tela_de_jogo, bg="grey", height=1, width=4)
+        self.grid(row=line, column=colunas)
+
+
+Botoes = dict()
+tela_de_jogo = tk.Tk()
 tela_de_jogo.title("Jogo da Velha Múltiplo")
-tela_de_jogo["bg"]="black"
-nome_do_botao=''
-for c in range (0,21):
-       if c % 2 == 0:
-            for q in range(0,21):
-                if q % 2 == 0 and q !=6 and q!= 14 and c !=6 and c != 14:
-                    if q >=0 and q <=4:
-                               nome_do_botao='botao_linha' + str(q)  + ' coluna' + str(c)
-                               Botoes[nome_do_botao]=Button(q,c)
-                    elif q >= 8 and q <=12:
-                               nome_do_botao='botao_linha' + str(q)  + ' coluna' + str(c)
-                               Botoes[nome_do_botao]=Button(q,c)
-                    elif q >=16 and q <=20:
-                               nome_do_botao='botao_linha' + str(q)  + ' coluna' + str(c)
-                               Botoes[nome_do_botao]=Button(q,c)
-                               
-labelgrande=Quadrante_Horizontal(6,0)
-labelgrande=Quadrante_Horizontal(14,0)
-labelgrande=Quadrante_Vertical(6,0)
-labelgrande=Quadrante_Vertical(14,0)
+tela_de_jogo["bg"] = "gray"
+nome_do_botao = ''
+for c in range(0, 21):
+    if c % 2 == 0:
+        for q in range(0, 21):
+            if q % 2 == 0 and q != 6 and q != 14 and c != 6 and c != 14:
+                if q >= 0 and q <= 4:
+                    nome_do_botao = 'botao_linha' + str(q) + ' coluna' + str(c)
+                    Botoes[nome_do_botao] = Button(q, c)
+                elif q >= 8 and q <= 12:
+                    nome_do_botao = 'botao_linha' + str(q) + ' coluna' + str(c)
+                    Botoes[nome_do_botao] = Button(q, c)
+                elif q >= 16 and q <= 20:
+                    nome_do_botao = 'botao_linha' + str(q) + ' coluna' + str(c)
+                    Botoes[nome_do_botao] = Button(q, c)
 
-
-
-
-
+labelgrande = Quadrante_Horizontal(6, 0)
+labelgrande = Quadrante_Horizontal(14, 0)
+labelgrande = Quadrante_Vertical(6, 0)
+labelgrande = Quadrante_Vertical(14, 0)
 
 tela_de_jogo.geometry("800x630")
 tela_de_jogo.mainloop()
+
+
+
+
+
