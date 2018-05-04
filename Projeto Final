@@ -79,7 +79,7 @@ labelgrande = Quadrante_Horizontal(14, 0)
 labelgrande = Quadrante_Vertical(6, 0)
 labelgrande = Quadrante_Vertical(14, 0)
 
-tela_de_jogo.geometry("800x630")
+tela_de_jogo.geometry("409x441")
 tela_de_jogo.mainloop()
 
 
