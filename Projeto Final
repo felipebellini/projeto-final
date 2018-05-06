@@ -1,5 +1,6 @@
-import tkinter as tk
 
+
+import tkinter as tk
 
 
 class Quadrante_Horizontal:
@@ -16,33 +17,20 @@ class Quadrante_Vertical:
 
 class Button:
     def __init__(self, line, colunas):
-        self = tk.Button(tela_de_jogo, height=2, width=4)
-        self.grid(row=line, column=colunas,command=alternar(self), text="")
-
-  def alternar(self):
-        jogando = input("Digite x ou o para iniciar o jogo")
-        x = 0
-        o = 0
-
-        if jogando == "x":
-            x += 1
-            jogando = "o"
-        elif jogando == "o":
-            o += 1
-            jogando = "x"
-
-        if x > o:
-            self.text("O")
-            print("Vez do bolinha")
-        elif o > x:
-            print("Vez do x")
-            self.text("x")
-        elif x == o:
-            print("Vez de {0}".format(jogando))
-            self.text(jogando)
 
 
-  
+
+        self.conteudo_label = tk.StringVar()
+        botão = tk.Button(tela_de_jogo, height=2, width=4)
+        botão.configure(textvariable=self.conteudo_label)
+        botão.configure(command=self.postar)
+        botão.grid(row=line, column=colunas)
+
+
+
+    def postar(self):
+        self.conteudo_label.set("o")
+
 class Label_Horizontal:
     def __init__(self, line, colunas):
         self = tk.Label(tela_de_jogo, bg="#c94646", height=1, width=26)
@@ -81,3 +69,22 @@ labelgrande = Quadrante_Vertical(14, 0)
 
 tela_de_jogo.geometry("409x441")
 tela_de_jogo.mainloop()
+
+jogando = "x"
+x = 0
+o = 0
+if jogando == "x":
+    x += 1
+    jogando = "o"
+
+if x > o:
+
+    print("Vez do bolinha")
+elif o > x:
+    print("Vez do x")
+
+elif x == o:
+    print("Vez de {0}".format(jogando))
+elif jogando == "o":
+    o += 1
+    jogando = "x"
