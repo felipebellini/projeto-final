@@ -1,8 +1,7 @@
 
 
 import tkinter as tk
-
-
+s=True
 class Quadrante_Horizontal:
     def __init__(self, linha, coluna):
         self = tk.Label(tela_de_jogo, height=2, bg="#c94646")
@@ -26,10 +25,19 @@ class Button:
         botão.configure(command=self.postar)
         botão.grid(row=line, column=colunas)
 
-
-
     def postar(self):
-        self.conteudo_label.set("o")
+        global s
+        if s==True:
+             self.conteudo_label.set("x")
+             s=False
+        elif s == False:
+            self.conteudo_label.set("o")
+            s= True
+
+
+
+
+
 
 class Label_Horizontal:
     def __init__(self, line, colunas):
@@ -43,11 +51,16 @@ class Label_Vertical:
         self.grid(row=line, column=colunas)
 
 
+
+
+
 Botoes = dict()
 tela_de_jogo = tk.Tk()
 tela_de_jogo.title("Jogo da Velha Múltiplo")
 tela_de_jogo["bg"] = "#c94646"
 nome_do_botao = ''
+
+
 for c in range(0, 21):
     if c % 2 == 0:
         for q in range(0, 21):
