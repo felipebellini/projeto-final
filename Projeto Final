@@ -22,17 +22,29 @@ class Button:
         self.conteudo_label = tk.StringVar()
         botão = tk.Button(tela_de_jogo, height=2, width=4)
         botão.configure(textvariable=self.conteudo_label)
+
         botão.configure(command=self.postar)
         botão.grid(row=line, column=colunas)
+        self.foiclicado= False
+
+
+
+
 
     def postar(self):
-        global s
-        if s==True:
-             self.conteudo_label.set("x")
-             s=False
-        elif s == False:
-            self.conteudo_label.set("o")
-            s= True
+        if self.foiclicado==False:
+            global s
+            if s==True:
+                 self.conteudo_label.set("x")
+                 s=False
+            elif s == False:
+                self.conteudo_label.set("o")
+                s= True
+        self.foiclicado = True
+
+
+
+
 
 
 
@@ -83,21 +95,3 @@ labelgrande = Quadrante_Vertical(14, 0)
 tela_de_jogo.geometry("409x441")
 tela_de_jogo.mainloop()
 
-jogando = "x"
-x = 0
-o = 0
-if jogando == "x":
-    x += 1
-    jogando = "o"
-
-if x > o:
-
-    print("Vez do bolinha")
-elif o > x:
-    print("Vez do x")
-
-elif x == o:
-    print("Vez de {0}".format(jogando))
-elif jogando == "o":
-    o += 1
-    jogando = "x"
