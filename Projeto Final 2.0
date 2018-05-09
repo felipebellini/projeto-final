@@ -1,2 +1,139 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri May  4 10:10:04 2018
 
-a
+@author: daniel
+"""
+
+import tkinter as tk
+s=True
+tela_de_jogo = tk.Tk()
+tela_de_jogo.title("Jogo da Velha Múltiplo")
+tela_de_jogo["bg"] = "black"
+
+
+class Button:
+    def __init__(self, linha, coluna):
+        self.conteudo_label = tk.StringVar()
+        botão = tk.Button(tela_de_jogo, height=2, width=4)
+        botão.configure(textvariable=self.conteudo_label)
+
+        botão.configure(command=self.postar)
+        botão.grid(row=linha, column=coluna)
+        self.foiclicado = False
+    def postar(self):
+        if self.foiclicado == False:
+            global s
+            if s == True:
+                self.conteudo_label.set("x")
+                s = False
+            elif s == False:
+                self.conteudo_label.set("o")
+                s = True
+        self.foiclicado = True
+
+
+class Quadrante_Horizontal:
+    def __init__(self, linha, coluna):
+        self = tk.Label(tela_de_jogo, height=2, bg="black")
+        self.grid(row=linha, column=coluna)
+
+
+class Quadrante_Vertical:
+    def __init__(self, coluna, linha):
+        self = tk.Label(tela_de_jogo, width=4, bg="black")
+        self.grid(row=linha, column=coluna)
+    # =============================================================================================================================#
+
+
+# Criando o dicionário de botões e adicionando os quadrantes
+Botoes = dict()
+for e in range(1, 10):
+    Botoes["Quadrante {0}".format(e)] = dict()
+for e in Botoes:
+    if e == "Quadrante 1":
+        Botoes["Quadrante 1"]["linha"] = 0
+        Botoes["Quadrante 1"]["coluna"] = 0
+
+
+    elif e == "Quadrante 2":
+        Botoes["Quadrante 2"]["linha"] = 0
+        Botoes["Quadrante 2"]["coluna"] = 6
+
+
+    elif e == "Quadrante 3":
+        Botoes["Quadrante 3"]["linha"] = 0
+        Botoes["Quadrante 3"]["coluna"] = 12
+
+
+    elif e == "Quadrante 4":
+        Botoes["Quadrante 4"]["linha"] = 6
+        Botoes["Quadrante 4"]["coluna"] = 0
+
+
+    elif e == "Quadrante 5":
+        Botoes["Quadrante 5"]["linha"] = 6
+        Botoes["Quadrante 5"]["coluna"] = 6
+
+    elif e == "Quadrante 6":
+        Botoes["Quadrante 6"]["linha"] = 6
+        Botoes["Quadrante 6"]["coluna"] = 12
+
+
+    elif e == "Quadrante 7":
+        Botoes["Quadrante 7"]["linha"] = 12
+        Botoes["Quadrante 7"]["coluna"] = 0
+
+
+    elif e == "Quadrante 8":
+        Botoes["Quadrante 8"]["linha"] = 12
+        Botoes["Quadrante 8"]["coluna"] = 6
+
+
+    elif e == "Quadrante 9":
+        Botoes["Quadrante 9"]["linha"] = 12
+        Botoes["Quadrante 9"]["coluna"] = 12
+numero = 1
+linha_final = 0
+coluna_final = 0
+# =============================================================================================================================#
+# Criando botões
+for quadrante in Botoes:
+    numero = 1
+    linha_final = Botoes[quadrante]["linha"]
+    coluna_final = Botoes[quadrante]["coluna"]
+    for e in range(0, 9):
+        if numero <= 3:
+            Botoes[quadrante]["Botao{0}".format(numero)] = Button(linha_final, coluna_final)
+            numero += 1
+            coluna_final += 1
+
+        elif numero == 4:
+            linha_final += 1
+            coluna_final = Botoes[quadrante]["coluna"]
+            Botoes[quadrante]["Botao{0}".format(numero)] = Button(linha_final, coluna_final)
+            numero += 1
+            coluna_final += 1
+
+        elif numero <= 6:
+            Botoes[quadrante]["Botao{0}".format(numero)] = Button(linha_final, coluna_final)
+            numero += 1
+            coluna_final += 1
+
+        elif numero == 7:
+            linha_final += 1
+            coluna_final = Botoes[quadrante]["coluna"]
+            Botoes[quadrante]["Botao{0}".format(numero)] = Button(linha_final, coluna_final)
+            numero += 1
+            coluna_final += 1
+
+        elif numero <= 9:
+            Botoes[quadrante]["Botao{0}".format(numero)] = Button(linha_final, coluna_final)
+            numero += 1
+            coluna_final += 1
+labelgrande = Quadrante_Horizontal(5, 0)
+labelgrande = Quadrante_Horizontal(11, 0)
+labelgrande = Quadrante_Vertical(5, 0)
+labelgrande = Quadrante_Vertical(11, 0)
+tela_de_jogo.geometry("409x441")
+tela_de_jogo.mainloop()
