@@ -8,7 +8,7 @@ tela_de_jogo["bg"] = "black"
 class Button:
     def __init__(self, linha, coluna):
         self.conteudo_label = tk.StringVar()
-        botão = tk.Button(tela_de_jogo, height=2, width=4)
+        botão = tk.Button(tela_de_jogo,relief=FLAT, height=2, width=4)
         botão.configure(textvariable=self.conteudo_label)
 
         botão.configure(command=self.postar)
