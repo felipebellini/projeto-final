@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+
+
+#erro1: se clicar duas vezes em um botao errado, ele passa a aceitar, tem que fazer que so aceito quando tem algo escrito
+#erro2: apos apertar um errado, ele trava os certos
 s = True
 pquad = -1
 # =============================================================================================================================#
@@ -59,7 +63,7 @@ class Button:
                     self.conteudo_label.set("O")
                     s = True
             self.foiclicado = True
-        pquad = self.posicao
+            pquad = self.posicao
 
 # =============================================================================================================================#
 # Criando listas
