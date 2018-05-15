@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-
 #erro1: se clicar duas vezes em um botao errado, ele passa a aceitar, tem que fazer que so aceito quando tem algo escrito
 #erro2: apos apertar um errado, ele trava os certos
 s = True
@@ -18,11 +17,11 @@ tela_de_jogo["bg"] = "black"
 
 # =============================================================================================================================#
 # Classes
-
+#Criando Botão
 class Button:
     def __init__(self, linha, coluna, posicao):
         self.conteudo_label = tk.StringVar()
-        botão = tk.Button(tela_de_jogo, height=2, width=4)
+        botão = tk.Button(tela_de_jogo, relief=tk.FLAT, height=2, width=4)
         botão.configure(textvariable=self.conteudo_label)
 
         botão.configure(command=self.enquadrar)
@@ -30,7 +29,9 @@ class Button:
         self.foiclicado = False
         self.quadrante =-1
         self.posicao = posicao
-
+        #self.simbolo = ''
+# =============================================================================================================================#
+#Definindo o próximo quadrante a ser jogado
     def enquadrar(self):
         if self in Quadrantes[0]:
             self.quadrante=0
@@ -54,16 +55,50 @@ class Button:
 
         global pquad
         if self.quadrante == pquad or pquad==-1:
+# =============================================================================================================================#
+# Escrevendo X e O            
             if self.foiclicado == False:
                 global s
                 if s == True:
                     self.conteudo_label.set("X")
+                    #self.simbolo = self.conteudo_label.get()
                     s = False
                 elif s == False:
                     self.conteudo_label.set("O")
+                    #self.simbolo = self.conteudo_label.get()
                     s = True
             self.foiclicado = True
             pquad = self.posicao
+        
+# =============================================================================================================================#
+# Checando se o jogo acabou
+            
+        '''if Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][1].simbolo and Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][2].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][3].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][3].simbolo == Quadrantes[self.quadrante][5].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][6].simbolo == Quadrantes[self.quadrante][7].simbolo and Quadrantes[self.quadrante][6].simbolo == Quadrantes[self.quadrante][8].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][3].simbolo and Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][6].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][1].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][1].simbolo == Quadrantes[self.quadrante][7].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][5].simbolo and Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][8].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][8].simbolo:
+            return 'Venceu'
+        
+        elif Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][6].simbolo:
+            return 'Venceu'
+        
+        else:
+            return 'Empatou' '''
 
 # =============================================================================================================================#
 # Criando listas
