@@ -30,6 +30,9 @@ class Button:
         self.quadrante =-1
         self.posicao = posicao
         #self.simbolo = ''
+    
+    def pegar_valor (self):
+        return self.conteudo_label.get()
 # =============================================================================================================================#
 #Definindo o próximo quadrante a ser jogado
     def enquadrar(self):
@@ -144,6 +147,7 @@ for elemento in Quadrantes:
             elemento.append(Button(linha, coluna,posicao))
             coluna += 1
             posicao += 1
+
 
 # =============================================================================================================================#
 # Criando os labels grande
