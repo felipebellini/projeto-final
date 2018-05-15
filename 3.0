@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-#erro1: se clicar duas vezes em um botao errado, ele passa a aceitar, tem que fazer que so aceito quando tem algo escrito
-#erro2: apos apertar um errado, ele trava os certos
 s = True
 pquad = -1
 # =============================================================================================================================#
@@ -72,32 +69,69 @@ class Button:
 # Checando se o jogo acabou
             
             if Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][3].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][4].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == self.conteudo_label.get():
-                print('Perdeu')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu",bg="blue")
+                    label.place(x=205,y=205)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu",bg="red")
+                    label.place(x=205,y=205)   
             
             elif Quadrantes[self.quadrante][5].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][5].conteudo_label.get() == Quadrantes[self.quadrante][7].conteudo_label.get() and Quadrantes[self.quadrante][5].conteudo_label.get() == self.conteudo_label.get():
-                print('Trouxa')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
             elif Quadrantes[self.quadrante][8].conteudo_label.get() == Quadrantes[self.quadrante][9].conteudo_label.get() and Quadrantes[self.quadrante][8].conteudo_label.get() == Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][8].conteudo_label.get() == self.conteudo_label.get():
-                print('Venceu')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
             elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][5].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][8].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == self.conteudo_label.get():
-                print('Vermelho')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
             elif Quadrantes[self.quadrante][3].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][3].conteudo_label.get() == Quadrantes[self.quadrante][9].conteudo_label.get() and Quadrantes[self.quadrante][3].conteudo_label.get() == self.conteudo_label.get():
-                print('Azul')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
             elif Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][7].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == self.conteudo_label.get():
-                print('Amarelo')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
             elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == self.conteudo_label.get():
-                print('Burro')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
             elif Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][8].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == self.conteudo_label.get():
-                print('Empate')
+                if self.conteudo_label.get() == "X":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 1 venceu")
+                    label.place(x=0,y=0)
+                elif self.conteudo_label.get() == "O":
+                    label = tk.Label(tela_de_jogo,height=4,text="Jogador 2 venceu")
+                    label.place(x=0,y=0)
             
-            else:
-                print('')
-
 # =============================================================================================================================#
 # Criando listas
 
