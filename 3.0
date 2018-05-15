@@ -29,10 +29,7 @@ class Button:
         self.foiclicado = False
         self.quadrante =-1
         self.posicao = posicao
-        #self.simbolo = ''
-    
-    def pegar_valor (self):
-        return self.conteudo_label.get()
+        self.simbolo = ''
 # =============================================================================================================================#
 #Definindo o próximo quadrante a ser jogado
     def enquadrar(self):
@@ -63,12 +60,10 @@ class Button:
             if self.foiclicado == False:
                 global s
                 if s == True:
-                    self.conteudo_label.set("X")
-                    #self.simbolo = self.conteudo_label.get()
+                    self.conteudo_label.set("X")                    
                     s = False
                 elif s == False:
                     self.conteudo_label.set("O")
-                    #self.simbolo = self.conteudo_label.get()
                     s = True
             self.foiclicado = True
             pquad = self.posicao
@@ -76,32 +71,32 @@ class Button:
 # =============================================================================================================================#
 # Checando se o jogo acabou
             
-        '''if Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][1].simbolo and Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][2].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][3].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][3].simbolo == Quadrantes[self.quadrante][5].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][6].simbolo == Quadrantes[self.quadrante][7].simbolo and Quadrantes[self.quadrante][6].simbolo == Quadrantes[self.quadrante][8].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][3].simbolo and Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][6].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][1].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][1].simbolo == Quadrantes[self.quadrante][7].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][5].simbolo and Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][8].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][0].simbolo == Quadrantes[self.quadrante][8].simbolo:
-            return 'Venceu'
-        
-        elif Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][4].simbolo and Quadrantes[self.quadrante][2].simbolo == Quadrantes[self.quadrante][6].simbolo:
-            return 'Venceu'
-        
-        else:
-            return 'Empatou' '''
+            if Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][3].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][4].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == self.conteudo_label.get():
+                print('Perdeu')
+            
+            elif Quadrantes[self.quadrante][5].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][5].conteudo_label.get() == Quadrantes[self.quadrante][7].conteudo_label.get() and Quadrantes[self.quadrante][5].conteudo_label.get() == self.conteudo_label.get():
+                print('Trouxa')
+            
+            elif Quadrantes[self.quadrante][8].conteudo_label.get() == Quadrantes[self.quadrante][9].conteudo_label.get() and Quadrantes[self.quadrante][8].conteudo_label.get() == Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][8].conteudo_label.get() == self.conteudo_label.get():
+                print('Venceu')
+            
+            elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][5].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][8].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == self.conteudo_label.get():
+                print('Vermelho')
+            
+            elif Quadrantes[self.quadrante][3].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][3].conteudo_label.get() == Quadrantes[self.quadrante][9].conteudo_label.get() and Quadrantes[self.quadrante][3].conteudo_label.get() == self.conteudo_label.get():
+                print('Azul')
+            
+            elif Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][7].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == self.conteudo_label.get():
+                print('Amarelo')
+            
+            elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == self.conteudo_label.get():
+                print('Burro')
+            
+            elif Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][6].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][8].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == self.conteudo_label.get():
+                print('Empate')
+            
+            else:
+                print('')
 
 # =============================================================================================================================#
 # Criando listas
@@ -116,21 +111,21 @@ for elemento in Quadrantes:
     for b in range(0, 9):
         if b <= 2:
             posicao=b
-            elemento.append(Button(linha, coluna,posicao))
+            elemento.append(Button(linha, coluna, posicao))
             coluna += 1
             posicao += 1
         elif b == 3:
             linha += 1
             coluna = elemento[1]
             posicao = b
-            elemento.append(Button(linha, coluna,posicao))
+            elemento.append(Button(linha, coluna, posicao))
             coluna += 1
 
             posicao += 1
 
         elif b <= 5:
             posicao = b
-            elemento.append(Button(linha, coluna,posicao))
+            elemento.append(Button(linha, coluna, posicao))
             coluna += 1
             posicao += 1
 
@@ -138,16 +133,15 @@ for elemento in Quadrantes:
             linha += 1
             coluna = elemento[1]
             posicao = b
-            elemento.append(Button(linha, coluna,posicao))
+            elemento.append(Button(linha, coluna, posicao))
             coluna += 1
             posicao += 1
 
         elif b <= 8:
             posicao = b
-            elemento.append(Button(linha, coluna,posicao))
+            elemento.append(Button(linha, coluna, posicao))
             coluna += 1
             posicao += 1
-
 
 # =============================================================================================================================#
 # Criando os labels grande
