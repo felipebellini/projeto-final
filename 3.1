@@ -8,6 +8,7 @@ QuadV= [0,0,0,0,0,0,0,0,0]
 
 import tkinter as tk
 
+
 tela_de_jogo = tk.Tk()
 tela_de_jogo.title("Jogo da Velha Múltiplo")
 tela_de_jogo["bg"] = "black"
@@ -1731,5 +1732,27 @@ labelGrandeV1.grid(row=0, column=5)
 labelGrandeV2 = tk.Label(tela_de_jogo, width=4, bg="black")
 labelGrandeV2.grid(row=0, column=11)
 
-tela_de_jogo.geometry("409x441")
+#el miguezao xD
+
+
+labelpequenoH1 = tk.Label(tela_de_jogo, height=3, bg="black")
+labelpequenoH1.grid(row=1, column=5)
+
+labelpequenoH2 = tk.Label(tela_de_jogo, height=3, bg="black")
+labelpequenoH2.grid(row=7, column=5)
+
+labelpequenoH3 = tk.Label(tela_de_jogo, height=3, bg="black")
+labelpequenoH3.grid(row=13, column=5)
+
+labelpequenoV1 = tk.Label(tela_de_jogo, width=6, bg="black")
+labelpequenoV1.grid(row=5, column=1)
+
+labelpequenoV2 = tk.Label(tela_de_jogo, width=6, bg="black")
+labelpequenoV2.grid(row=5, column=7)
+
+labelpequenoV3 = tk.Label(tela_de_jogo, width=6, bg="black")
+labelpequenoV3.grid(row=5, column=13)
+
+
+tela_de_jogo.geometry("440x472")
 tela_de_jogo.mainloop()
