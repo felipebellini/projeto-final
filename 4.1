@@ -20,11 +20,11 @@ tela_de_jogo["bg"] = "black"
 class Button:
     def __init__(self, linha, coluna, posicao):
         self.conteudo_label = tk.StringVar()
-        botão = tk.Button(tela_de_jogo, relief=tk.FLAT, height=2, width=4)
+        botão = tk.Button(tela_de_jogo, relief=tk.FLAT, height=2, width=5, font = "Arial 16")
         botão.configure(textvariable=self.conteudo_label)
 
         botão.configure(command=self.enquadrar)
-        botão.grid(row=linha, column=coluna)
+        botão.grid(row=linha, column=coluna, padx = 4, pady = 4)
         self.foiclicado = False
         self.quadrante = -1
         self.posicao = posicao
@@ -1819,23 +1819,23 @@ labelGrandeV2.grid(row=0, column=11)
 # =============================================================================================================================#
 # Criando labels pequenos
 
-labelpequenoH1 = tk.Label(tela_de_jogo, height=3, bg="black")
-labelpequenoH1.grid(row=1, column=5)
-
-labelpequenoH2 = tk.Label(tela_de_jogo, height=3, bg="black")
-labelpequenoH2.grid(row=7, column=5)
-
-labelpequenoH3 = tk.Label(tela_de_jogo, height=3, bg="black")
-labelpequenoH3.grid(row=13, column=5)
-
-labelpequenoV1 = tk.Label(tela_de_jogo, width=6, bg="black")
-labelpequenoV1.grid(row=5, column=1)
-
-labelpequenoV2 = tk.Label(tela_de_jogo, width=6, bg="black")
-labelpequenoV2.grid(row=5, column=7)
-
-labelpequenoV3 = tk.Label(tela_de_jogo, width=6, bg="black")
-labelpequenoV3.grid(row=5, column=13)
+#labelpequenoH1 = tk.Label(tela_de_jogo, height=3, bg="black")
+#labelpequenoH1.grid(row=1, column=5)
+#
+#labelpequenoH2 = tk.Label(tela_de_jogo, height=3, bg="black")
+#labelpequenoH2.grid(row=7, column=5)
+#
+#labelpequenoH3 = tk.Label(tela_de_jogo, height=3, bg="black")
+#labelpequenoH3.grid(row=13, column=5)
+#
+#labelpequenoV1 = tk.Label(tela_de_jogo, width=6, bg="black")
+#labelpequenoV1.grid(row=5, column=1)
+#
+#labelpequenoV2 = tk.Label(tela_de_jogo, width=6, bg="black")
+#labelpequenoV2.grid(row=5, column=7)
+#
+#labelpequenoV3 = tk.Label(tela_de_jogo, width=6, bg="black")
+#labelpequenoV3.grid(row=5, column=13)
 
 tela_de_jogo.geometry("440x472")
 tela_de_jogo.mainloop()
