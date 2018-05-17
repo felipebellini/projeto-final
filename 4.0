@@ -2,12 +2,13 @@
 
 s = True
 pquad = -1
-QuadV= [0,0,0,0,0,0,0,0,0]
+QuadV = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+prox=[[1,1,1,0,0,0,0,0,0],[0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,1,1,1],[1,0,0,1,0,0,1,0,0],[0,1,0,0,1,0,0,1,0],[0,0,1,0,0,1,0,0,1],[1,0,0,0,1,0,0,0,1],[0,0,1,0,1,0,1,0,0]]
+probola=[[2,2,2,0,0,0,0,0,0],[0,0,0,2,2,2,0,0,0],[0,0,0,0,0,0,2,2,2],[2,0,0,2,0,0,2,0,0],[0,2,0,0,2,0,0,2,0],[0,0,2,0,0,2,0,0,2],[2,0,0,0,2,0,0,0,2],[0,0,2,0,2,0,2,0,0]]
 # =============================================================================================================================#
 # Criando tela
 
 import tkinter as tk
-
 
 tela_de_jogo = tk.Tk()
 tela_de_jogo.title("Jogo da Velha Múltiplo")
@@ -30,8 +31,8 @@ class Button:
         self.posicao = posicao
         self.simbolo = ''
 
-# =============================================================================================================================#
-# Definindo o próximo quadrante a ser jogado
+    # =============================================================================================================================#
+    # Definindo o próximo quadrante a ser jogado
     def enquadrar(self):
         if self in Quadrantes[0]:
             self.quadrante = 0
@@ -55,8 +56,8 @@ class Button:
         global pquad
         global QuadV
         if self.quadrante == pquad or pquad == -1 or QuadV[pquad] == 1:
-# =============================================================================================================================#
-# Escrevendo X e O
+            # =============================================================================================================================#
+            # Escrevendo X e O
             if self.foiclicado == False:
                 global s
                 if s == True:
@@ -67,8 +68,8 @@ class Button:
                     s = True
             self.foiclicado = True
             pquad = self.posicao
-# =============================================================================================================================#
-# Checando se o jogo da velha pequeno acabou
+            # =============================================================================================================================#
+            # Checando se o jogo da velha pequeno acabou
 
             if Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][
                 3].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == \
@@ -82,7 +83,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -284,7 +285,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -485,7 +486,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -685,7 +686,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -885,7 +886,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -1085,7 +1086,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -1274,7 +1275,7 @@ class Button:
                         QuadV[self.quadrante] = 2
 
 
-         
+
             elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][
                 6].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == \
                     Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][
@@ -1287,7 +1288,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -1487,7 +1488,7 @@ class Button:
                         label.place(x=20, y=0)
                         if self.posicao == self.quadrante:
                             pquad = -1
-                        QuadV[self.quadrante]=1
+                        QuadV[self.quadrante] = 1
 
                     elif self.conteudo_label.get() == "O":
                         label = tk.Label(tela_de_jogo, width=15, height=7)
@@ -1674,10 +1675,20 @@ class Button:
                         if self.posicao == self.quadrante:
                             pquad = -1
                         QuadV[self.quadrante] = 2
- 
+
+
 # =============================================================================================================================#
-#Chegando se o jogo acabou                       
-                        
+# Chegando se o jogo acabou
+
+            for e in prox:
+                if QuadV == e:
+                    label=tk.label(tela_de_jogo, width= 24, height=4,text="X Ganhou!!!")
+                    label.place(x=180,y=180)
+            for e in probola:
+                if QuadV == e:
+                    label = tk.label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
+                    label.place(x=180, y=180)
+
 # =============================================================================================================================#
 # Criando listas
 
@@ -1737,7 +1748,7 @@ labelGrandeV1.grid(row=0, column=5)
 labelGrandeV2 = tk.Label(tela_de_jogo, width=4, bg="black")
 labelGrandeV2.grid(row=0, column=11)
 
-#el miguezao xD
+# el miguezao xD
 
 
 labelpequenoH1 = tk.Label(tela_de_jogo, height=3, bg="black")
@@ -1757,7 +1768,6 @@ labelpequenoV2.grid(row=5, column=7)
 
 labelpequenoV3 = tk.Label(tela_de_jogo, width=6, bg="black")
 labelpequenoV3.grid(row=5, column=13)
-
 
 tela_de_jogo.geometry("440x472")
 tela_de_jogo.mainloop()
