@@ -30,8 +30,8 @@ class Button:
         self.posicao = posicao
         self.simbolo = ''
 
-    # =============================================================================================================================#
-    # Definindo o próximo quadrante a ser jogado
+# =============================================================================================================================#
+# Definindo o próximo quadrante a ser jogado
     def enquadrar(self):
         if self in Quadrantes[0]:
             self.quadrante = 0
@@ -55,8 +55,8 @@ class Button:
         global pquad
         global QuadV
         if self.quadrante == pquad or pquad == -1 or QuadV[pquad] == 1 and pquad!=10:
-            # =============================================================================================================================#
-            # Escrevendo X e O
+# =============================================================================================================================#
+# Escrevendo X e O
             if self.foiclicado == False:
                 global s
                 if s == True:
@@ -67,8 +67,8 @@ class Button:
                     s = True
             self.foiclicado = True
             pquad = self.posicao
-            # =============================================================================================================================#
-            # Checando se o jogo da velha pequeno acabou
+# =============================================================================================================================#
+# Checando se o jogo da velha pequeno acabou
 
             if Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][
                 3].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == \
@@ -1676,6 +1676,7 @@ class Button:
                         QuadV[self.quadrante] = 2
 
 
+
 # =============================================================================================================================#
 # Chegando se o jogo acabou
             if QuadV[0]== QuadV[1] and QuadV[1]==QuadV[2]:
@@ -1688,7 +1689,7 @@ class Button:
                     label.place(x=180, y=180)
                     pquad = 10
 
-            if QuadV[3] == QuadV[4] and QuadV[4] == QuadV[5]:
+            elif QuadV[3] == QuadV[4] and QuadV[4] == QuadV[5]:
                 if QuadV[3] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
@@ -1696,7 +1697,7 @@ class Button:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-            if QuadV[6] == QuadV[7] and QuadV[7] == QuadV[8]:
+            elif QuadV[6] == QuadV[7] and QuadV[7] == QuadV[8]:
                 if QuadV[6] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
@@ -1704,7 +1705,7 @@ class Button:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-            if QuadV[0] == QuadV[3] and QuadV[3] == QuadV[6]:
+            elif QuadV[0] == QuadV[3] and QuadV[3] == QuadV[6]:
                 if QuadV[0] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
@@ -1713,7 +1714,7 @@ class Button:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-            if QuadV[1] == QuadV[4] and QuadV[4] == QuadV[7]:
+            elif QuadV[1] == QuadV[4] and QuadV[4] == QuadV[7]:
                 if QuadV[1] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
@@ -1722,7 +1723,7 @@ class Button:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-            if QuadV[2] == QuadV[5] and QuadV[5] == QuadV[8]:
+            elif QuadV[2] == QuadV[5] and QuadV[5] == QuadV[8]:
                 if QuadV[2] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
@@ -1731,7 +1732,7 @@ class Button:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-            if QuadV[0] == QuadV[4] and QuadV[4] == QuadV[8]:
+            elif QuadV[0] == QuadV[4] and QuadV[4] == QuadV[8]:
                 if QuadV[0] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
@@ -1740,15 +1741,18 @@ class Button:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-            if QuadV[2] == QuadV[4] and QuadV[4] == QuadV[6]:
-                if QuadV[0] == 1:
+            elif QuadV[2] == QuadV[4] and QuadV[4] == QuadV[6]:
+                if QuadV[2] == 1:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="X Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
-                elif QuadV[0] == 2:
+                elif QuadV[2] == 2:
                     label = tk.Label(tela_de_jogo, width=24, height=4, text="Bola Ganhou!!!")
                     label.place(x=180, y=180)
                     pquad = 10
+
+
+
 
 
 
