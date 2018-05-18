@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+
+import tkinter as tk
+import os
+
+tela_jogo= tk.Tk()
+tela_jogo.title("Tela Inicial")
+tela_jogo["bg"]= "darkgrey"
+
+
+
+def criar_janela():
+    tela = tk.Toplevel(tela_jogo)
+    
+
+label_titulo= tk.Label(tela_jogo,text="JOGO DA VELHA MÚLTIPLO", height=3, width=30, bg="white",font="Arial 35 bold")
+label_titulo.place(x=-53,y=25)
+
+
+botao1player= tk.Button(tela_jogo, text="1 PLAYER", height=2, width=20, bg="blue",font="Arial 20",fg="white",relief=tk.FLAT)
+botao1player.place(x=225,y=300)
+
+
+botao2player= tk.Button(tela_jogo, text="2 PLAYERS", height=2, width=20, bg="red",font="Arial 20",fg="white",relief=tk.FLAT,command=criar_janela)
+botao2player.place(x=225,y=400)
+
+
+instrucoes= tk.Button(tela_jogo,text="INSTRUÇÕES", height=2, width=20,font="Arial 20",relief=tk.FLAT)
+instrucoes.place(x=225,y=600)
+
+
+
+
+
+
+tela_jogo.geometry("769x738")
+tela_jogo.mainloop()
