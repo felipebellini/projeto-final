@@ -1,0 +1,2080 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jun 10 12:53:05 2018
+
+@author: daniel
+"""
+
+from random import randint
+import tkinter as tk
+
+s = True
+pquad = -1
+QuadV = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+Quadrante_IA = int
+Posicao_IA = int
+IA = False
+Posicao_bola=[]
+Chances_de_vitoria=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+executa_random = True
+sair = False
+# =============================================================================================================================#
+# Criando tela
+
+tela_de_jogo = tk.Tk()
+tela_de_jogo.title("Jogo da Velha Múltiplo")
+tela_de_jogo["bg"] = "black"
+
+
+# =============================================================================================================================#
+# Classes
+# Criando Botão
+class Button:
+    def __init__(self, linha, coluna, posicao):
+        self.conteudo_label = tk.StringVar()
+        botão = tk.Button(tela_de_jogo, relief=tk.FLAT, height=2, width=5, font="Arial 16")
+        botão.configure(textvariable=self.conteudo_label)
+
+        botão.configure(command=self.enquadrar)
+        botão.grid(row=linha, column=coluna, padx=4, pady=4)
+        self.foiclicado = False
+        self.quadrante = -1
+        self.posicao = posicao
+        self.simbolo = ''
+
+        
+    # =============================================================================================================================#
+    # Definindo o próximo quadrante a ser jogado
+    def enquadrar(self,vez="humano"):
+        if self in Quadrantes[0]:
+            self.quadrante = 0
+        elif self in Quadrantes[1]:
+            self.quadrante = 1
+        elif self in Quadrantes[2]:
+            self.quadrante = 2
+        elif self in Quadrantes[3]:
+            self.quadrante = 3
+        elif self in Quadrantes[4]:
+            self.quadrante = 4
+        elif self in Quadrantes[5]:
+            self.quadrante = 5
+        elif self in Quadrantes[6]:
+            self.quadrante = 6
+        elif self in Quadrantes[7]:
+            self.quadrante = 7
+        elif self in Quadrantes[8]:
+            self.quadrante = 8
+
+        global pquad
+        global QuadV
+        if self.quadrante == pquad or pquad == -1 or QuadV[pquad] == 1 or QuadV[pquad] == 2 and pquad != 10 and self.foiclicado == False:
+# =============================================================================================================================#
+# Escrevendo X e O  
+           
+            if self.foiclicado == False:
+                global s
+                if s == True:
+                    self.conteudo_label.set("X")
+                    s = False
+                elif s == False:
+                    self.conteudo_label.set("O")
+                    s = True
+                pquad = self.posicao
+                self.foiclicado = True
+# =============================================================================================================================#
+#Random  
+                if IA == True:
+                 if vez == "humano":
+                  global Posicao_IA
+                  global Quadrante_IA
+              
+                  if QuadV[pquad] > 0:
+                         Quadrante_IA = randint(0,8)
+                         while QuadV[Quadrante_IA] > 0:
+                               Quadrante_IA = randint(0,8)
+                         pquad = Quadrante_IA      
+                      
+                  if Quadrantes[pquad][2].conteudo_label.get() != "O" and Quadrantes[pquad][3].conteudo_label.get() != "O"  and Quadrantes[pquad][4].conteudo_label.get() != "O" and Quadrantes[pquad][5].conteudo_label.get() != "O" and Quadrantes[pquad][6].conteudo_label.get() != "O" and Quadrantes[pquad][7].conteudo_label.get() != "O" and Quadrantes[pquad][8].conteudo_label.get() != "O" and Quadrantes[pquad][9].conteudo_label.get() != "O" and Quadrantes[pquad][10].conteudo_label.get() != "O":
+                        Posicao_IA = randint(2,10)  
+                        while Quadrantes[pquad][Posicao_IA].foiclicado == True:
+                            Posicao_IA= randint(2,10)
+                        
+                          
+# =============================================================================================================================#
+# IA para uma bola no quadrante
+                  else:  
+                      ct = 0
+                      botao = 2
+                      while botao <= 10:
+                          if Quadrantes[pquad][botao].conteudo_label.get() == "O" :
+                              ct+=1
+                          botao+=1 
+                      print(ct)    
+                      if ct < 2:
+                          if Quadrantes[pquad][2].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][3].foiclicado == True and Quadrantes[pquad][5].foiclicado == True and Quadrantes[pquad][6].foiclicado == True :
+                                  Posicao_IA = randint(4,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True :
+                                      Posicao_IA = randint(4,10)
+                                      
+                              else:
+                                  Posicao_IA = randint(3,6)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 4 :
+                                      Posicao_IA = randint(3,6)
+                              
+                          elif Quadrantes[pquad][3].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][2].foiclicado == True and Quadrantes[pquad][4].foiclicado == True and Quadrantes[pquad][5].foiclicado == True and Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][7].foiclicado == True :
+                                  Posicao_IA = randint(8,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True :
+                                      Posicao_IA = randint(8,10)
+                              else:
+                                  Posicao_IA = randint(2,7)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 3 :
+                                      Posicao_IA = randint(2,7)      
+                                
+                          elif Quadrantes[pquad][4].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][3].foiclicado == True and Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][7].foiclicado == True :
+                                  Posicao_IA = randint(2,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 4 :
+                                      Posicao_IA = randint(2,10)
+                              else:
+                                  Posicao_IA = randint(3,7)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 4 or Posicao_IA == 5 :
+                                      Posicao_IA = randint(3,7)      
+                                
+                          elif Quadrantes[pquad][5].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][2].foiclicado == True and Quadrantes[pquad][3].foiclicado == True and Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][8].foiclicado == True and Quadrantes[pquad][9].foiclicado == True :
+                                  Posicao_IA = randint(4,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 5 :
+                                      Posicao_IA = randint(4,10)
+                              else:
+                                  Posicao_IA = randint(2,9)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True and Posicao_IA == 4 or Posicao_IA == 5 or Posicao_IA == 7 :
+                                      Posicao_IA = randint(2,9)      
+                                
+                          elif Quadrantes[pquad][6].conteudo_label.get() == "O" :
+                                  Posicao_IA = randint(2,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 6 :
+                                      Posicao_IA = randint(2,10)
+                              
+                          elif Quadrantes[pquad][7].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][3].foiclicado == True and Quadrantes[pquad][4].foiclicado == True and Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][9].foiclicado == True and Quadrantes[pquad][10].foiclicado == True :
+                                  Posicao_IA = randint(2,8)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 7 :
+                                      Posicao_IA = randint(2,8)
+                              else:
+                                  Posicao_IA = randint(3,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True and Posicao_IA == 5 or Posicao_IA == 7 or Posicao_IA == 8:
+                                      Posicao_IA = randint(3,10)
+                  
+                          elif Quadrantes[pquad][8].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][5].foiclicado == True and Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][9].foiclicado == True :
+                                  Posicao_IA = randint(2,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True or Posicao_IA == 8 :
+                                      Posicao_IA = randint(2,10)
+                              else:
+                                  Posicao_IA = randint(5,9)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True and Posicao_IA == 7 or Posicao_IA == 8:
+                                      Posicao_IA = randint(5,9)
+                     
+                          elif Quadrantes[pquad][9].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][5].foiclicado == True and Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][7].foiclicado == True and Quadrantes[pquad][8].foiclicado == True and Quadrantes[pquad][10].foiclicado == True :
+                                  Posicao_IA = randint(2,4)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True :
+                                      Posicao_IA = randint(2,4)
+                              else:
+                                  Posicao_IA = randint(5,10)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True and Posicao_IA == 9 :
+                                      Posicao_IA = randint(5,10)
+                                      
+                          elif Quadrantes[pquad][10].conteudo_label.get() == "O" :
+                              if Quadrantes[pquad][6].foiclicado == True and Quadrantes[pquad][7].foiclicado == True and Quadrantes[pquad][9].foiclicado == True :
+                                  Posicao_IA = randint(2,8)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True :
+                                      Posicao_IA = randint(2,8)
+                              else:
+                                  Posicao_IA = randint(6,9)
+                                  while Quadrantes[pquad][Posicao_IA].foiclicado == True and Posicao_IA == 8 :
+                                      Posicao_IA = randint(6,9)
+                                      
+# =============================================================================================================================#              
+#IA para duas ou mais bolas no quadrante                                      
+                                      
+                      elif ct == 2:
+                          global Posicao_bola
+                          while len(Posicao_bola) < 2:
+                              for i in range(2,11):
+                                  if Quadrantes[pquad][i].conteudo_label.get() == "O":
+                                      Posicao_bola.append(i-2)
+                                      print(Posicao_bola)
+                          
+                          for chance in Chances_de_vitoria:
+                              if Posicao_bola[0] in chance and Posicao_bola[1] in chance:
+                                  for terceira_bola in range(0,9):
+                                      Posicao_bola.append(terceira_bola)
+                                      print(terceira_bola)
+                                      if Posicao_bola[0] in chance and Posicao_bola[1] in chance and Posicao_bola[2] in chance and Quadrantes[pquad][terceira_bola+2].foiclicado == False:
+                                          Posicao_IA = terceira_bola+2
+                                          global executa_random
+                                          executa_random = False
+                                          break
+                                          
+                                      else:
+                                          del Posicao_bola[len(Posicao_bola)-1]
+                          
+                          if executa_random == True:
+                                      Posicao_IA = randint(2,10)  
+                                      while Quadrantes[pquad][Posicao_IA].foiclicado == True:
+                                          Posicao_IA= randint(2,10)
+                                          print('Entrou')
+
+                          executa_random = True   
+                          ct = 0 
+                          Posicao_bola = []
+                          
+                      elif ct == 3:
+                           global sair
+                           while len(Posicao_bola) < 3:
+                              for i in range(2,11):
+                                  if Quadrantes[pquad][i].conteudo_label.get() == "O":
+                                      Posicao_bola.append(i-2)
+                                      print(Posicao_bola)
+                                      
+                           for chance in Chances_de_vitoria:
+                              if Posicao_bola[0] in chance and Posicao_bola[1] in chance:
+                                  for terceira_bola in range(0,9):
+                                      Posicao_bola.append(terceira_bola)
+                                      print(terceira_bola)
+                                      if Posicao_bola[0] in chance and Posicao_bola[1] in chance and Posicao_bola[3] in chance and Quadrantes[pquad][terceira_bola+2].foiclicado == False:
+                                          Posicao_IA = terceira_bola+2
+                                          executa_random = False
+                                          sair = True
+                                          break
+                                          
+                                      else:
+                                          del Posicao_bola[len(Posicao_bola)-1]
+                                          
+                           if sair == False:               
+                                          
+                               for chance in Chances_de_vitoria:
+                                  if Posicao_bola[0] in chance and Posicao_bola[2] in chance:
+                                      for terceira_bola in range(0,9):
+                                          Posicao_bola.append(terceira_bola)
+                                          print(terceira_bola)
+                                          if Posicao_bola[0] in chance and Posicao_bola[2] in chance and Posicao_bola[3] in chance and Quadrantes[pquad][terceira_bola+2].foiclicado == False:
+                                              Posicao_IA = terceira_bola+2
+                                              executa_random = False
+                                              sair = True
+                                              break
+                                              
+                                          else:
+                                              del Posicao_bola[len(Posicao_bola)-1]   
+                           if sair == False:
+                           
+                               for chance in Chances_de_vitoria:
+                                  if Posicao_bola[1] in chance and Posicao_bola[2] in chance:
+                                      for terceira_bola in range(0,9):
+                                          Posicao_bola.append(terceira_bola)
+                                          print(terceira_bola)
+                                          if Posicao_bola[1] in chance and Posicao_bola[2] in chance and Posicao_bola[3] in chance and Quadrantes[pquad][terceira_bola+2].foiclicado == False:
+                                              Posicao_IA = terceira_bola+2
+                                              executa_random = False
+                                              break
+                                              
+                                          else:
+                                              del Posicao_bola[len(Posicao_bola)-1]
+                              
+                           if executa_random == True:
+                                 Posicao_IA = randint(2,10)  
+                                 while Quadrantes[pquad][Posicao_IA].foiclicado == True:
+                                      Posicao_IA= randint(2,10)
+                                      print('Entrou')
+                                      
+                           sair = False           
+                           executa_random = True   
+                           ct = 0 
+                           Posicao_bola = []               
+                                          
+                      else: 
+                          Posicao_IA = randint(2,10)  
+                          while Quadrantes[pquad][Posicao_IA].foiclicado == True:
+                              Posicao_IA= randint(2,10)
+                              
+                  (Quadrantes[pquad][Posicao_IA]).enquadrar(vez="IA")
+                  self.foiclicado = True
+                  
+# =============================================================================================================================#
+# Checando se o jogo da velha pequeno acabou
+
+            if Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][
+                3].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][4].conteudo_label.get() and Quadrantes[self.quadrante][
+                2].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+            elif Quadrantes[self.quadrante][5].conteudo_label.get() == Quadrantes[self.quadrante][
+                6].conteudo_label.get() and Quadrantes[self.quadrante][5].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][7].conteudo_label.get() and Quadrantes[self.quadrante][
+                5].conteudo_label.get() == self.conteudo_label.get():
+
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            elif Quadrantes[self.quadrante][8].conteudo_label.get() == Quadrantes[self.quadrante][
+                9].conteudo_label.get() and Quadrantes[self.quadrante][8].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][
+                8].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][
+                5].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][8].conteudo_label.get() and Quadrantes[self.quadrante][
+                2].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            elif Quadrantes[self.quadrante][3].conteudo_label.get() == Quadrantes[self.quadrante][
+                6].conteudo_label.get() and Quadrantes[self.quadrante][3].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][9].conteudo_label.get() and Quadrantes[self.quadrante][
+                3].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            elif Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][
+                7].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][
+                4].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            elif Quadrantes[self.quadrante][2].conteudo_label.get() == Quadrantes[self.quadrante][
+                6].conteudo_label.get() and Quadrantes[self.quadrante][2].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][10].conteudo_label.get() and Quadrantes[self.quadrante][
+                2].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            elif Quadrantes[self.quadrante][4].conteudo_label.get() == Quadrantes[self.quadrante][
+                6].conteudo_label.get() and Quadrantes[self.quadrante][4].conteudo_label.get() == \
+                    Quadrantes[self.quadrante][8].conteudo_label.get() and Quadrantes[self.quadrante][
+                4].conteudo_label.get() == self.conteudo_label.get():
+                if self.quadrante == 0:
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 1:
+                    # bg="blue"
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 2:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=4)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=4)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+
+                elif self.quadrante == 3:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=4, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 4:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 5:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=275)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=275)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 6:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=50, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=3, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=42, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 7:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=335, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=282, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=323, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+
+                elif self.quadrante == 8:
+
+                    if self.conteudo_label.get() == "X":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="X", fg="blue", font="Arial 141")
+                        label.place(x=617, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 1
+
+
+                    elif self.conteudo_label.get() == "O":
+                        label = tk.Label(tela_de_jogo, width=32, height=14)
+                        label.place(x=565, y=550)
+                        label = tk.Label(tela_de_jogo, text="O", fg="red", font="Arial 141")
+                        label.place(x=605, y=550)
+                        if self.posicao == self.quadrante:
+                            pquad = -1
+                        QuadV[self.quadrante] = 2
+
+            # =============================================================================================================================#
+            # Chegando se o jogo acabou
+            if QuadV[0] == QuadV[1] and QuadV[1] == QuadV[2] and QuadV[0] !=0:
+                if QuadV[0] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[0] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[3] == QuadV[4] and QuadV[4] == QuadV[5] and QuadV[3] !=0:
+                if QuadV[3] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[3] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[6] == QuadV[7] and QuadV[7] == QuadV[8] and QuadV[6] !=0:
+                if QuadV[6] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[6] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[0] == QuadV[3] and QuadV[3] == QuadV[6] and QuadV[0] !=0:
+                if QuadV[0] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[0] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[1] == QuadV[4] and QuadV[4] == QuadV[7] and QuadV[1] !=0:
+                if QuadV[1] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[1] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[2] == QuadV[5] and QuadV[5] == QuadV[8] and QuadV[2] !=0:
+                if QuadV[2] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[2] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[0] == QuadV[4] and QuadV[4] == QuadV[8] and QuadV[0] !=0:
+                if QuadV[0] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[0] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+            elif QuadV[2] == QuadV[4] and QuadV[4] == QuadV[6] and QuadV[2] !=0:
+                if QuadV[2] == 1:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="X Ganhou!!!", font="Arial 50", bg="blue",
+                                     fg="white")
+                    label.place(x=-60, y=270)
+                    pquad = 10
+
+                elif QuadV[2] == 2:
+                    label = tk.Label(tela_de_jogo, width=25, height=3, text="Bola Ganhou!!!", font="Arial 50", bg="red",
+                                     fg="white")
+                    label.place(x=-90, y=270)
+                    pquad = 10
+
+
+# =============================================================================================================================#
+# Criando listas
+
+Quadrantes = [[0, 0], [0, 6], [0, 12], [6, 0], [6, 6], [6, 12], [12, 0], [12, 6], [12, 12]]
+linha = 0
+coluna = 0
+posicao = 0
+for elemento in Quadrantes:
+    linha = elemento[0]
+    coluna = elemento[1]
+    for b in range(0, 9):
+        if b <= 2:
+            posicao = b
+            elemento.append(Button(linha, coluna, posicao))
+            coluna += 1
+            posicao += 1
+        elif b == 3:
+            linha += 1
+            coluna = elemento[1]
+            posicao = b
+            elemento.append(Button(linha, coluna, posicao))
+            coluna += 1
+
+            posicao += 1
+
+        elif b <= 5:
+            posicao = b
+            elemento.append(Button(linha, coluna, posicao))
+            coluna += 1
+            posicao += 1
+
+        elif b == 6:
+            linha += 1
+            coluna = elemento[1]
+            posicao = b
+            elemento.append(Button(linha, coluna, posicao))
+            coluna += 1
+            posicao += 1
+
+        elif b <= 8:
+            posicao = b
+            elemento.append(Button(linha, coluna, posicao))
+            coluna += 1
+            posicao += 1
+
+# =============================================================================================================================#
+# Criando os labels grande
+labelGrandeH1 = tk.Label(tela_de_jogo, height=3, bg="black")
+labelGrandeH1.grid(row=5, column=0)
+
+labelGrandeH2 = tk.Label(tela_de_jogo, height=3, bg="black")
+labelGrandeH2.grid(row=11, column=0)
+
+labelGrandeV1 = tk.Label(tela_de_jogo, width=6, bg="black")
+labelGrandeV1.grid(row=0, column=5)
+
+labelGrandeV2 = tk.Label(tela_de_jogo, width=6, bg="black")
+labelGrandeV2.grid(row=0, column=11)
+
+# =============================================================================================================================#
+
+tela_de_jogo.geometry("798x770")
+tela_de_jogo.mainloop()
